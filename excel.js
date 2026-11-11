@@ -15,22 +15,33 @@ function checkpoint(){history.push(snapshot());if(history.length>30)history.shif
 function persist(){try{localStorage.setItem(key,snapshot());queueExcelSync();dirty=false;$('saveState').textContent='Kaydedildi';return true}catch(e){msg('Depolama doldu; dosyayı indirerek sakla.');return false}}
 let timer;function changed(){dirty=true;$('saveState').textContent='Kaydediliyor…';clearTimeout(timer);timer=setTimeout(persist,550)}
 function sync(){const rows=grid();$('fileName').textContent=filename+' · '+sheets[active].name+' · '+Math.max(0,rows.length-1)+' veri satırı';$('sheetSelect').replaceChildren(...sheets.map((sh,i)=>{const opt=document.createElement('option');opt.value=i;opt.textContent=sh.name;opt.selected=i===active;return opt}));if($('rowCount'))$('rowCount').textContent=Math.max(0,rows.length-1)}
-function render(){sync();const rows=grid(),q=filter.trim().toLocaleLowerCase('tr');const table=document.createElement('table');const shown=rows.map((r,i)=>({r,i})).filter(({r,i})=>i===0||!q||r.some(x=>String(x??'').toLocaleLowerCase('tr').includes(q)));shown.forEach(({r,i})=>{const tr=document.createElement('tr');tr.dataset.sourceIndex=i;tr.style.height=((sheets[active].rowHeights||{})[i]||61)+'px';r.forEach((value,j)=>{const cell=document.createElement(i===0?'th':'td');cell.contentEditable='true';cell.spellcheck=false;cell.textContent=value??'';cell.title='Düzenlemek için tıkla';cell.style.width=((sheets[active].colWidths||{})[j]||210)+'px';cell.style.minWidth=cell.style.width;cell.style.maxWidth=cell.style.width;cell.style.position='relative';if(i===0){const grip=document.createElement('span');grip.className='sql-col-grip';grip.title='Sütun genişliğini değiştirmek için sürükle';grip.contentEditable='false';grip.addEventListener('pointerdown',e=>startResize(e,'col',j,cell));cell.append(grip)}const rowGrip=document.createElement('span');rowGrip.className='sql-row-grip';rowGrip.title='Satır yüksekliğini değiştirmek için sürükle';rowGrip.contentEditable='false';rowGrip.addEventListener('pointerdown',e=>startResize(e,'row',i,tr));cell.append(rowGrip);cell.addEventListener('focus',()=>{cell.dataset.before=cell.textContent});cell.addEventListener('blur',()=>{if(cell.textContent===cell.dataset.before)return;checkpoint();grid()[i][j]=cell.textContent;changed();sync()});cell.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();cell.blur()}});tr.append(cell)});table.append(tr)});table.classList.add('sql-resize-table');table.style.tableLayout='fixed';table.style.width='max-content';$('sheet').replaceChildren(table);$('visibleCount').textContent=Math.max(0,shown.length-1)+' satır görüntüleniyor'}
+function render(){
+ sync();const rows=grid(),q=filter.trim().toLocaleLowerCase('tr'),sheet=sheets[active];
+ const table=document.createElement('table');table.className='sql-resize-table';table.style.tableLayout='fixed';table.style.width='max-content';
+ const colgroup=document.createElement('colgroup');const count=Math.max(1,...rows.map(r=>r.length));
+ for(let j=0;j<count;j++){const col=document.createElement('col');col.style.width=((sheet.colWidths||{})[j]||210)+'px';colgroup.append(col)}table.append(colgroup);
+ const shown=rows.map((r,i)=>({r,i})).filter(({r,i})=>i===0||!q||r.some(x=>String(x??'').toLocaleLowerCase('tr').includes(q)));
+ shown.forEach(({r,i})=>{const tr=document.createElement('tr');tr.dataset.sourceIndex=i;tr.style.height=((sheet.rowHeights||{})[i]||61)+'px';
+ for(let j=0;j<count;j++){
+ const cell=document.createElement(i===0?'th':'td');cell.contentEditable='true';cell.spellcheck=false;cell.textContent=r[j]??'';cell.title='Düzenlemek için tıkla';
+ const right=document.createElement('span');right.className='sql-col-grip';right.contentEditable='false';right.title='Bu sütunu genişletmek veya daraltmak için sürükle';right.setAttribute('aria-hidden','true');right.addEventListener('pointerdown',e=>startResize(e,'col',j,table));cell.append(right);
+ if(j===0){const bottom=document.createElement('span');bottom.className='sql-row-grip';bottom.contentEditable='false';bottom.title='Satır yüksekliğini değiştirmek için sürükle';bottom.setAttribute('aria-hidden','true');bottom.addEventListener('pointerdown',e=>startResize(e,'row',i,tr));cell.append(bottom)}
+ cell.addEventListener('focus',()=>{cell.dataset.before=cellText(cell)});
+ cell.addEventListener('blur',()=>{const value=cellText(cell);if(value===cell.dataset.before)return;checkpoint();grid()[i][j]=value;changed();sync()});
+ cell.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();cell.blur()}});tr.append(cell)
+ }table.append(tr)});
+ $('sheet').replaceChildren(table);$('visibleCount').textContent=Math.max(0,shown.length-1)+' satır görüntüleniyor'
+}
+function cellText(cell){return Array.from(cell.childNodes).filter(n=>!(n.nodeType===1&&n.classList.contains('sql-col-grip'))&&!(n.nodeType===1&&n.classList.contains('sql-row-grip'))).map(n=>n.textContent).join('')}
 function startResize(e,axis,index,element){
- if(e.button!==0)return;
- e.preventDefault();e.stopPropagation();
- const sheet=sheets[active];const field=axis==='col'?'colWidths':'rowHeights';
- const current=axis==='col'?element.getBoundingClientRect().width:element.getBoundingClientRect().height;
- const start=axis==='col'?e.clientX:e.clientY;
- const minimum=axis==='col'?70:32,maximum=axis==='col'?650:220;
- const grip=e.currentTarget;grip.setPointerCapture(e.pointerId);
- let size=current,updated=false;
- const move=event=>{
-  size=Math.max(minimum,Math.min(maximum,Math.round(current+(axis==='col'?event.clientX:event.clientY)-start)));
-  if(axis==='col')document.querySelectorAll('#sheet tr').forEach(row=>{const c=row.children[index];if(c){c.style.width=size+'px';c.style.minWidth=size+'px';c.style.maxWidth=size+'px'}});
-  else document.querySelectorAll('#sheet tr').forEach(row=>{if(row.dataset.sourceIndex===String(index))row.style.height=size+'px'});
-  updated=true;
- };
+ if(e.button!==0)return;e.preventDefault();e.stopPropagation();
+ const sheet=sheets[active],field=axis==='col'?'colWidths':'rowHeights';
+ const target=axis==='col'?element.querySelectorAll('col')[index]:element;
+ if(!target)return;
+ const current=axis==='col'?target.getBoundingClientRect().width:element.getBoundingClientRect().height;
+ const origin=axis==='col'?e.clientX:e.clientY,minimum=axis==='col'?65:32,maximum=axis==='col'?800:300;
+ const grip=e.currentTarget;grip.setPointerCapture(e.pointerId);let size=current,updated=false;
+ const move=ev=>{size=Math.max(minimum,Math.min(maximum,Math.round(current+(axis==='col'?ev.clientX:ev.clientY)-origin)));if(axis==='col')target.style.width=size+'px';else element.style.height=size+'px';updated=true};
  const end=()=>{grip.removeEventListener('pointermove',move);grip.removeEventListener('pointerup',end);grip.removeEventListener('pointercancel',end);if(updated&&Math.abs(size-current)>1){checkpoint();sheet[field]??={};sheet[field][index]=size;changed();msg(axis==='col'?'Sütun genişliği kaydedildi.':'Satır yüksekliği kaydedildi.')}};
  grip.addEventListener('pointermove',move);grip.addEventListener('pointerup',end);grip.addEventListener('pointercancel',end);
 }

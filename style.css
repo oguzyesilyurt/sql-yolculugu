@@ -34,3 +34,12 @@
 #sheet .sql-col-grip{position:absolute;right:0;top:0;bottom:0;width:11px;cursor:col-resize;touch-action:none;z-index:3}
 #sheet .sql-row-grip{position:absolute;left:0;right:0;bottom:0;height:9px;cursor:row-resize;touch-action:none;z-index:2}
 #sheet .sql-col-grip:hover,#sheet .sql-row-grip:hover{background:rgba(34,139,100,.22)}
+
+/* V16: Her sütun sınırında görünür boyutlandırma ve okunabilir düzenleme imleci */
+#sheet .sql-resize-table{border-collapse:separate;border-spacing:0;width:max-content!important;table-layout:fixed}
+#sheet .sql-resize-table td,#sheet .sql-resize-table th{position:relative;min-width:0;max-width:none;width:auto;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;caret-color:#146c4b!important;cursor:text;color:#214d3d}
+#sheet .sql-resize-table td:focus,#sheet .sql-resize-table th:focus{outline:2px solid #16855b;outline-offset:-2px;background:#f0fbf5;caret-color:#075b3b!important}
+#sheet .sql-col-grip{position:absolute;right:0;top:0;bottom:0;width:12px;cursor:col-resize!important;touch-action:none;z-index:5;border-right:2px solid transparent}
+#sheet .sql-col-grip:hover,#sheet .sql-col-grip:active{background:rgba(28,132,91,.24);border-right-color:#16855b}
+#sheet .sql-row-grip{position:absolute;left:0;right:12px;bottom:0;height:10px;cursor:row-resize!important;touch-action:none;z-index:4;border-bottom:2px solid transparent}
+#sheet .sql-row-grip:hover,#sheet .sql-row-grip:active{background:rgba(28,132,91,.24);border-bottom-color:#16855b}
