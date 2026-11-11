@@ -21,3 +21,5 @@
 
 /* v7: navigation and small screens */
 #lessonNav{display:block;overflow-y:auto;flex:1 1 auto;min-height:110px}.sidebar{min-height:0}.denel-progress{gap:8px}.denel-progress strong{overflow-wrap:anywhere}@media(max-width:900px){#lessonNav{display:flex!important;min-height:80px!important;max-height:120px!important;overflow-x:auto!important;overflow-y:hidden!important}.sidebar{height:auto!important}.content{min-width:0}.lesson-card{min-width:0}.topbar{gap:12px}}
+
+.cloud-login-form{display:grid;gap:14px;margin-top:24px;text-align:left}.cloud-login-form label{display:grid;gap:7px;font-weight:700;color:#39476e}.cloud-login-form input,.cloud-login-form select{width:100%;padding:13px;border:1px solid #d9e0f1;border-radius:12px;font:inherit;background:#fff}.cloud-login-form .primary{width:100%}.profile-choices .selected{outline:3px solid #6779f5}#loginError{min-height:1.4em;color:#ba3d5a;font-size:14px}
