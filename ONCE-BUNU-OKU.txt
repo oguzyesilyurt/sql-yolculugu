@@ -1,0 +1,12 @@
+SQL YOLCULUĞU v11 — 4 HANELİ PIN GİRİŞİ
+
+1) Supabase > SQL Editor > New query bölümünde PIN-KURULUM.sql içeriğini çalıştır.
+   Bu adım olmadan yeni PIN'ler giriş yapmaz. Var olan kullanıcı kimlikleri ve veriler korunur.
+2) PIN-KURULUM.sql dosyasını GitHub'a yükleme! SQL Editor geçmişindeki PIN'leri de gizli tut.
+3) Web sitesine zip içindeki HTML, CSS ve JS dosyalarını yükle; tarayıcıda sert yenile (Ctrl+Shift+R).
+4) Denel ve Ayçelen kartlarını ayrı ayrı dene. İlerleme senkronizasyonu için Supabase bağlantısı çalışmalı.
+5) Chrome ERR_CERT... hatası sürüyorsa PIN değişimi bunu çözmez: ağ/sertifika sorunu ayrıca giderilmeli.
+
+NOT: 4 haneli PIN kolay tahmin edilir. Bu yapı yalnızca düşük hassasiyetli özel eğitim sitesi içindir.
+Supabase Auth rate limiting ve mümkünse bot koruması etkin olmalı. Bu sürüm PIN'i JavaScript'e gömmez;
+Supabase Auth üzerinden doğrular. PIN-KURULUM.sql herkese açık depoda tutulmamalıdır.
