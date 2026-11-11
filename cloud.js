@@ -1,5 +1,5 @@
 /* Public browser configuration; RLS enforces per-user access. */
-const CLOUD_URL='https://snawutcityclwensrcm.supabase.co';
+const CLOUD_URL='https://snawwutcityclwensrcm.supabase.co';
 const CLOUD_KEY='sb_publishable_H5jmlZeIoEcNvmbTZ2oUzQ_NIJ9CLxK';
 const CLOUD_USERS={denelsertel:'denelsertel@sql-yolculugu.invalid',aycelen:'aycelen@sql-yolculugu.invalid'};
 let cloudClient=null;
