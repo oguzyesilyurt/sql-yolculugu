@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5f8ff"><title>SQL Yolculuğu • Öğren, dene, ilerle</title>
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="shell">
+<aside class="sidebar">
+<div class="brand"><span class="brand-icon">✦</span><div>SQL <strong>Yolculuğu</strong><small>Bir sorguyla başlar.</small></div></div>
+<div class="side-label">ÖĞRENME YOLUN</div><nav id="lessonNav" aria-label="Dersler"></nav>
+<div class="side-footer"><div class="mini-title">🌱 Her gün küçük bir adım</div><p>Önce mantığı öğren, sonra kendi sorgunu yaz.</p><button id="resetBtn" class="text-button">İlerlemeyi sıfırla</button></div>
+</aside>
+<main class="main">
+<header class="topbar"><span class="eyebrow">MAVİ OFİS • SQL EĞİTİMİ</span><div class="status"><span>⭐ <b id="xp">0</b> XP</span><span>🏆 <b id="done">0</b>/<b id="total">0</b> ders</span></div></header>
+<div class="content">
+<div class="hero"><div><div class="pill">✨ Sıfırdan, adım adım</div><h1>Verileri anlamaya<br><em>hazır mısın?</em></h1><p>Bir şirketin gerçek hayata benzeyen verileriyle SQL öğren. Her tamamladığın ders, yeni bir kapı açsın.</p></div><div class="hero-art" aria-hidden="true"><div class="db-stack">▤<span>SQL</span></div><span class="spark one">✦</span><span class="spark two">✧</span></div></div>
+<div class="progress-row"><div><strong>Yolculuğun</strong><span id="progressLabel">İlk adımı at!</span></div><div class="track"><div id="progressFill"></div></div></div>
+<section class="lesson-card"><div class="lesson-heading"><span id="chapterBadge" class="chapter-badge">BÖLÜM 01</span><span id="lessonState" class="lesson-state">🔓 Açık</span></div><h2 id="lessonTitle"></h2><p id="lessonIntro" class="lead"></p>
+<div id="explanation" class="explanation"></div>
+<div class="sample"><div class="sample-header"><span>📋 ÖRNEK VERİ TABLOSU</span><span>Mavi Ofis</span></div><div id="sampleTable" class="table-wrap"></div></div>
+<div class="mission"><div class="mission-label">🎯 ŞİMDİ SENİN SIRAN</div><h3 id="missionTitle"></h3><p id="missionText"></p></div>
+<div class="editor"><div class="editor-top"><span class="dots"><i></i><i></i><i></i></span><span>SQL EDITÖRÜ</span><span class="editor-hint">SQLite</span></div><textarea id="sqlInput" spellcheck="false" aria-label="SQL sorgusu" placeholder="SELECT ..."></textarea></div>
+<div class="actions"><button id="runBtn" class="primary">▶ Sorguyu çalıştır</button><button id="hintBtn" class="secondary">💡 İpucu</button><button id="resetQueryBtn" class="secondary">↺ Temizle</button></div>
+<div id="hint" class="hint hidden"></div><div id="feedback" class="feedback hidden" role="status"></div>
+<div id="results" class="results hidden"><h3>📊 Sorgu sonucu</h3><div id="resultTable" class="table-wrap"></div></div>
+<div class="bottom-nav"><button id="prevBtn" class="secondary">← Önceki ders</button><button id="nextBtn" class="next" disabled>Sonraki ders →</button></div>
+</section><footer>SQL Yolculuğu · Sabırla öğren, güvenle uygula. 💙</footer></div>
+</main></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.13.0/sql-wasm.js"></script>
+<script src="app.js"></script>
+</body></html>
