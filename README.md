@@ -22,3 +22,9 @@ Dosyaların olduğu klasörde `python -m http.server 8000` çalıştır ve taray
 - İlerleme `localStorage` ile cihaz/tarayıcı bazında saklanır; cihazlar arasında eşitlenmez.
 - Sadece SELECT/CTE türü sorgulara izin veren temel istemci tarafı filtre bulunur. Bu filtre **güvenlik sınırı değildir**; uygulamada gerçek sunucu ve gizli veri bulunmadığından amaç yanlışlıkla veriyi değiştirmemektir. Her sorgu öncesi veritabanı sıfırlanır.
 - Bu ilk sürümde 9 ders bulunur. Sonraki sürümde yeni dersler, görsel açıklamalar ve kişiselleştirme eklenebilir.
+
+## Eğitim Kütüphanesi güncellemesi
+- `egitim.html` ve `egitim.js` dosyaları eklendi.
+- Ana sayfaya eğitim kütüphanesine geçiş ve Denel'in ilerleme özeti eklendi.
+- İlerleme aynı tarayıcıdaki mevcut `sql-yolculugu-v1` kaydından okunur.
+- URL sonundaki `?utm_source=chatgpt.com` bir takip parametresidir; site adresi bu parametre olmadan paylaşılabilir.
