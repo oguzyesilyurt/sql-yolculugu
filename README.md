@@ -1,20 +1,15 @@
-# SQL Yolculuğu — V3
+# SQL Yolculuğu — V5
 
-Denel için 12 haftalık, Türkçe SQL eğitim sitesi. GitHub Pages ile yayınlanır.
+GitHub Pages üzerinde çalışan, iki profilli SQL eğitim sitesi.
 
-## Sayfalar
-- `hikaye.html`: Karşılama ve hikâye
-- `yol-haritasi.html`: 12 haftalık eğitim ve final proje planı
-- `index.html`: 1 hikâye görevi + 30 SQL alıştırması + 3 değerlendirme
-- `egitim.html`: Etkileşimli konu kütüphanesi
+## Kurulum
+Tüm dosyaları deponun kök dizinine yükleyin. GitHub Pages: main / (root).
 
-## Yayınlama
-ZIP içindeki dosyaları GitHub deposunun ana dizinine yükleyin. Settings > Pages > Deploy from branch > main / (root).
+## Profil seçimi
+Denel ve Ayçelen şifresiz seçilir. Bu bir güvenlik veya kimlik doğrulama sistemi değildir. İlerleme tarayıcıda localStorage ile tutulur.
 
-## Teknik notlar
-- SQL motoru: sql.js / SQLite WebAssembly (CDN); internet gerekir.
-- İlerleme: tarayıcı localStorage, cihazlar arasında senkronize olmaz.
-- Eski v1 tamamlanan 9 ders, v3'e ilk açılışta taşınır.
-- SQL kontrolü sorgu sonucuna göre yapılır. Sunucuya kullanıcı sorgusu gönderilmez.
-- Eğitim veri tabanı her sorguda sıfırlanır.
-- SQL temelini öğretir; MSSQL/PostgreSQL/SAP HANA'nın tamamını öğretmez.
+## Çiçoma hediye gönder
+Hediye düğmesi bir **paylaşılabilir bağlantı** oluşturur. Gönderenin WhatsApp, SMS veya başka bir kanalla bu bağlantıyı alıcıya iletmesi gerekir. Alıcı bağlantıyı açıp doğru profili seçince sürpriz popup'ı görür. Aynı tarayıcıdaki hediyeler gelen kutusunda saklanır. **Otomatik cihazlar arası teslim, push bildirim veya SMS gönderimi yoktur.** Bunlar için gerçek bir backend ve mesaj servisi gerekir.
+
+## Gizlilik
+Kullanıcılar profil seçimini değiştirebilir; profil verileri aynı cihazda korunmaz. Kişisel veya hassas veriler girmeyin.

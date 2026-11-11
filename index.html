@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="tr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#f5f8ff"><title>SQL Yolculuğu • Öğren, dene, ilerle</title>
-<link rel="stylesheet" href="style.css?v=3"></head>
+<link rel="stylesheet" href="style.css?v=5"><script src="profiles.js?v=5" defer></script></head>
 <body>
-<div class="dedication">✦ Buludex, Denel Hanım’a başarılar diler. <span>💙</span></div>
+<div class="dedication">✦ Buludex, Denel Hanım’a başarılar diler. <span>✨</span></div>
 <div class="shell">
 <aside class="sidebar">
 <div class="brand"><span class="brand-icon">✦</span><div>SQL <strong>Yolculuğu</strong><small>Bir sorguyla başlar.</small></div></div>
@@ -12,7 +12,7 @@
 <div class="side-footer"><div class="mini-title">🌱 Her gün küçük bir adım</div><p>Önce mantığı öğren, sonra kendi sorgunu yaz.</p><button id="resetBtn" class="text-button">İlerlemeyi sıfırla</button></div>
 </aside>
 <main class="main">
-<header class="topbar"><span class="eyebrow">MAVİ OFİS • DENEL’İN SQL YOLCULUĞU</span><a class="top-link" href="yol-haritasi.html">🗺️ Yol Haritası</a><a class="top-link" href="egitim.html">📚 Eğitim Kütüphanesi →</a><div class="status"><span>⭐ <b id="xp">0</b> XP</span><span>🏆 <b id="done">0</b>/<b id="total">0</b> ders</span></div></header>
+<header class="topbar"><span class="eyebrow">MAVİ OFİS • <span data-person-name>Denel</span>’in SQL yolculuğu</span><div class="top-links"><a class="top-link" href="yol-haritasi.html">🗺️ Yol Haritası</a><a class="top-link" href="egitim.html">📚 Eğitim Kütüphanesi →</a></div><div class="status"><span>⭐ <b id="xp">0</b> XP</span><span>🏆 <b id="done">0</b>/<b id="total">0</b> ders</span></div></header>
 <div class="content">
 <div class="hero"><div><div class="pill">✨ Sıfırdan, adım adım</div><h1>Verileri anlamaya<br><em>hazır mısın?</em></h1><p>Bir şirketin gerçek hayata benzeyen verileriyle SQL öğren. Her tamamladığın ders, yeni bir kapı açsın.</p></div><div class="hero-art" aria-hidden="true"><div class="db-stack">▤<span>SQL</span></div><span class="spark one">✦</span><span class="spark two">✧</span></div></div>
 <div class="denel-progress">🌷 <strong>Denel’in ilerlemesi</strong> <span id="denelStatus">Yolculuk başlıyor!</span></div>
@@ -26,9 +26,9 @@
 <div id="hint" class="hint hidden"></div><div id="feedback" class="feedback hidden" role="status"></div>
 <div id="results" class="results hidden"><h3>📊 Sorgu sonucu</h3><div id="resultTable" class="table-wrap"></div></div>
 <div class="bottom-nav"><button id="prevBtn" class="secondary">← Önceki ders</button><button id="nextBtn" class="next" disabled>Sonraki ders →</button></div>
-</section><footer>SQL Yolculuğu · Sabırla öğren, güvenle uygula. 💙</footer></div>
+</section><footer>SQL Yolculuğu · Sabırla öğren, güvenle uygula. ✨</footer></div>
 </main></div>
-<script>if(!sessionStorage.getItem('sql-yolculugu-intro-seen')){sessionStorage.setItem('sql-yolculugu-intro-seen','1');window.location.replace('hikaye.html');}</script>
+<script>if(!localStorage.getItem('sql-active-profile'))window.location.replace('login.html');</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.13.0/sql-wasm.js"></script>
-<script src="app.js?v=3"></script>
-<div class="modal hidden" id="celebration" role="dialog" aria-modal="true" aria-label="Başarı kutlaması"><div class="modal-card"><div class="pop-star">🌟</div><h2>✨ Muhteşem, Denel!</h2><p class="pop-sub">Bir adım daha attın. +20 XP kazandın!</p><button id="closeCelebration" class="primary">Devam et →</button></div></div></body></html>
+<script src="app.js?v=5"></script>
+<div class="modal hidden" id="celebration" role="dialog" aria-modal="true" aria-label="Başarı kutlaması"><div class="modal-card"><div class="pop-star">🌟</div><h2>✨ Muhteşem, Denel!</h2><p class="pop-sub">Bir adım daha attın. +20 XP kazandın!</p><button id="closeCelebration" class="primary">Devam et →</button></div></div><div class="account-pill"><span data-cico-progress>Çiçona kavuşmana 34 adım kaldı ✨</span><button data-logout>Çıkış</button></div></body></html>
