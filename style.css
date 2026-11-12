@@ -43,3 +43,76 @@
 #sheet .sql-col-grip:hover,#sheet .sql-col-grip:active{background:rgba(28,132,91,.24);border-right-color:#16855b}
 #sheet .sql-row-grip{position:absolute;left:0;right:12px;bottom:0;height:10px;cursor:row-resize!important;touch-action:none;z-index:4;border-bottom:2px solid transparent}
 #sheet .sql-row-grip:hover,#sheet .sql-row-grip:active{background:rgba(28,132,91,.24);border-bottom-color:#16855b}
+
+
+/* v20: Mobile homepage navigation and non-overlapping controls */
+@media (max-width: 900px) {
+  body { overflow-x: hidden; }
+  .sidebar { overflow: visible !important; }
+  .sidebar #lessonNav {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 8px 4px 12px !important;
+  }
+  .sidebar #lessonNav .nav-item {
+    width: 100% !important;
+    min-width: 0 !important;
+    flex: initial !important;
+    margin: 0 !important;
+    padding: 10px 8px !important;
+    gap: 7px !important;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    align-items: center;
+  }
+  .sidebar #lessonNav .nav-icon { width: 28px; height: 28px; flex: 0 0 28px; }
+  .sidebar #lessonNav .nav-item b { font-size: 12px; }
+  .sidebar #lessonNav .nav-item small { font-size: 10px; }
+  .topbar .top-links {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px !important;
+    width: 100%;
+  }
+  .topbar .top-links .top-link {
+    min-width: 0 !important;
+    width: 100%;
+    padding: 10px 8px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.35;
+  }
+  .topbar .status { flex-wrap: wrap; }
+  .content > .excel-float {
+    position: static !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 14px 0 10px;
+    padding: 14px 12px;
+    min-height: 48px;
+    text-align: center;
+    box-shadow: 0 5px 16px #203b2915;
+    z-index: auto;
+  }
+  .account-pill {
+    position: static !important;
+    width: calc(100% - 28px);
+    max-width: none !important;
+    margin: 16px auto 90px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .gift-widget { position: fixed; right: 12px !important; bottom: 14px !important; z-index: 95; }
+  .gift-trigger { max-width: calc(100vw - 24px); }
+  .content { padding-bottom: 24px !important; }
+}
+@media (max-width: 390px) {
+  .sidebar #lessonNav .nav-item { padding: 8px 5px !important; }
+  .sidebar #lessonNav .nav-icon { width: 24px; height: 24px; flex-basis: 24px; }
+}
