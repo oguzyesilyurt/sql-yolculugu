@@ -16,7 +16,34 @@ const box=document.createElement('div');box.className='gift-widget';box.innerHTM
 const panel=box.querySelector('.gift-panel');box.querySelector('.gift-trigger').onclick=()=>panel.classList.toggle('hidden');box.querySelector('.gift-close').onclick=()=>panel.classList.add('hidden');const target=p.id==='denelsertel'?'aycelen':'denelsertel';box.querySelector('#giftTo').textContent='Alıcı: '+SQL_PROFILES[target].name;
 box.querySelectorAll('[data-gift]').forEach(button=>button.addEventListener('click',async()=>{const type=button.dataset.gift;const gift={from:p.id,to:target,type,id:Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10)};const url=new URL('login.html',location.href);url.searchParams.set('hediye',giftEncode(gift));const msg=`${SQL_PROFILES[p.id].name} sana ${GIFT_TYPES[type].icon} gönderdi! SQL Yolculuğu'nda aç: ${url.href}`;const status=box.querySelector('.gift-message');try{const sender=await cloudUser();const receiverId=target==='denelsertel'?'4e83cdc4-0a4a-4faa-a351-3929c37af57d':'8ef1ad59-7786-4d69-b923-1a918fb77459';const {error:giftError}=await cloud().from('gifts').insert({sender_id:sender.id,receiver_id:receiverId,gift_type:type});if(giftError)throw giftError;status.textContent='Hediyen gönderildi! Çiçon giriş yaptığında görecek. 🌷';return;if(navigator.share){await navigator.share({title:'Çiçondan hediye!',text:msg});status.textContent='Paylaşım ekranı açıldı. Gönderdiğinde karşı taraf bağlantıdan hediyesini görecek.'}else{await navigator.clipboard.writeText(msg);status.textContent='Bağlantı kopyalandı! Şimdi çiçona mesaj olarak gönder.'}}catch(e){if(e.name==='AbortError')return;status.innerHTML='Bağlantıyı kopyalayıp paylaş: <input readonly aria-label="Hediye bağlantısı">';const input=status.querySelector('input');input.value=url.href;input.select()}}));
 const list=giftInbox(p.id),unread=list.filter(x=>!x.read);box.querySelector('#giftUnread').textContent=unread.length?'• '+unread.length+' yeni':'';if(unread.length){const g=unread[0];const overlay=document.createElement('div');overlay.className='gift-overlay';overlay.innerHTML=`<div class="gift-popup" role="dialog" aria-modal="true" aria-label="Çiçondan hediye"><div class="gift-pop-icon">${GIFT_TYPES[g.type].icon}</div><h2>Çiçondan sürpriz!</h2><p>${SQL_PROFILES[g.from].name} sana bir ${GIFT_TYPES[g.type].name} gönderdi!</p><button type="button" class="primary">Çok tatlı! ✨</button></div>`;document.body.appendChild(overlay);const dismiss=()=>{list.forEach(x=>x.read=true);localStorage.setItem(giftInboxKey(p.id),JSON.stringify(list));overlay.remove();box.querySelector('#giftUnread').textContent=''};overlay.querySelector('button').onclick=dismiss;overlay.addEventListener('click',e=>{if(e.target===overlay)dismiss()});}}
-document.addEventListener('DOMContentLoaded',async()=>{if(location.pathname.endsWith('/login.html'))return;await cloudBoot();if(sqlRequireLogin()){sqlPersonalize();giftInit()}});
+document.addEventListener('DOMContentLoaded',async()=>{if(location.pathname.endsWith('/login.html'))return;await cloudBoot();if(sqlRequireLogin()){sqlPersonalize();giftInit();setTimeout(cloudGifts,700)}});
 
-async function cloudGifts(){const p=sqlProfile();if(!p)return;try{const {data,error}=await cloud().from('gifts').select('*').is('read_at',null).order('created_at',{ascending:false}).limit(10);if(error)throw error;if(!data?.length)return;const g=data[0];const sender=g.sender_id==='4e83cdc4-0a4a-4faa-a351-3929c37af57d'?'Denel':'Ayçelen';const icon=GIFT_TYPES[g.gift_type]?.icon||'🌷';const overlay=document.createElement('div');overlay.className='gift-overlay';overlay.innerHTML='<div class="gift-popup"><div class="gift-pop-icon">'+icon+'</div><h2>Çiçondan sürpriz!</h2><p>'+sender+' sana hediye gönderdi!</p><button class="primary">Çok tatlı! ✨</button></div>';document.body.appendChild(overlay);overlay.querySelector('button').onclick=async()=>{await cloud().from('gifts').update({read_at:new Date().toISOString()}).eq('id',g.id);overlay.remove()}}catch(e){console.warn('Gift sync:',e.message)}}
-document.addEventListener('cloud-ready',()=>setTimeout(cloudGifts,500));
+// Cloud gifts are separate from local link-based gifts. Only the recipient sees them.
+let giftCloudBusy=false;
+async function cloudGifts(){
+  if(giftCloudBusy||document.querySelector('.gift-overlay'))return;
+  const p=sqlProfile();if(!p)return;
+  giftCloudBusy=true;
+  try{
+    const user=await cloudUser();if(!user)return;
+    const {data,error}=await cloud().from('gifts').select('id,sender_id,receiver_id,gift_type,read_at,created_at')
+      .eq('receiver_id',user.id).is('read_at',null).order('created_at',{ascending:false}).limit(10);
+    if(error)throw error;
+    if(!data?.length)return;
+    const g=data[0];
+    const sender=g.sender_id==='4e83cdc4-0a4a-4faa-a351-3929c37af57d'?'Denel':'Ayçelen';
+    const icon=GIFT_TYPES[g.gift_type]?.icon||'🌷';
+    const overlay=document.createElement('div');overlay.className='gift-overlay';
+    overlay.innerHTML='<div class="gift-popup" role="dialog" aria-modal="true" aria-label="Çiçondan hediye"><div class="gift-pop-icon">'+icon+'</div><h2>Çiçondan sürpriz!</h2><p>'+sender+' sana hediye gönderdi!</p><button class="primary" type="button">Çok tatlı! ✨</button></div>';
+    document.body.appendChild(overlay);
+    overlay.querySelector('button').onclick=async()=>{
+      const btn=overlay.querySelector('button');btn.disabled=true;
+      const {error:readError}=await cloud().from('gifts').update({read_at:new Date().toISOString()}).eq('id',g.id).eq('receiver_id',user.id);
+      if(readError){console.error('Hediye okundu işaretlenemedi:',readError);btn.disabled=false;btn.textContent='Tekrar dene';return}
+      overlay.remove();cloudGifts();
+    };
+  }catch(e){console.error('Hediye senkronizasyon hatası:',e)}finally{giftCloudBusy=false}
+}
+document.addEventListener('cloud-ready',()=>setTimeout(cloudGifts,350));
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)cloudGifts()});
+window.addEventListener('focus',()=>cloudGifts());

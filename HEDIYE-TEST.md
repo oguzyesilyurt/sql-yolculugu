@@ -1,0 +1,1 @@
+Hediye test: Denel ile gonder, cikis yap, Aycelen ile gir. Acik sayfada sekmeye geri donunce de kontrol edilir. Popup gorunmezse F12 Console > Hediye senkronizasyon hatasi. Supabase gifts SELECT/UPDATE RLS politikalari aliciya izin vermeli. Bu paket veritabani politikalarini degistirmez.
