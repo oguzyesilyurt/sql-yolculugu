@@ -116,3 +116,31 @@
   .sidebar #lessonNav .nav-item { padding: 8px 5px !important; }
   .sidebar #lessonNav .nav-icon { width: 24px; height: 24px; flex-basis: 24px; }
 }
+
+/* V21: mobile navigation carousel and compact actions; overrides V20 grid */
+@media (max-width:900px) {
+  .sidebar #lessonNav {
+    display:flex!important; flex-wrap:nowrap!important; grid-template-columns:none!important;
+    gap:8px!important; overflow-x:auto!important; overflow-y:hidden!important;
+    min-height:0!important; max-height:none!important; padding:7px 12px 13px!important;
+    scroll-snap-type:x proximity; -webkit-overflow-scrolling:touch; overscroll-behavior-x:contain;
+    scrollbar-width:thin;
+  }
+  .sidebar #lessonNav .nav-item {
+    flex:0 0 auto!important; width:auto!important; min-width:122px!important;
+    max-width:170px!important; padding:11px 12px!important; white-space:nowrap!important;
+    scroll-snap-align:start; margin:0!important;
+  }
+  .sidebar #lessonNav .nav-item b,.sidebar #lessonNav .nav-item small {white-space:nowrap!important;}
+  .content > .excel-float {margin:10px 0 12px!important; padding:11px 12px!important; min-height:42px!important;}
+  .gift-widget {right:10px!important;bottom:12px!important;z-index:95;}
+  .gift-trigger {font-size:11px!important;padding:9px 12px!important;border-radius:13px!important;}
+  .account-pill {margin:10px auto 72px!important;}
+}
+@media (max-width:520px) {
+  .sidebar #lessonNav .nav-item {min-width:112px!important;}
+  .sidebar {padding-bottom:3px!important;}
+  .sidebar .brand {padding-bottom:6px!important;}
+  .sidebar .learn-link {margin:3px!important;}
+  .gift-panel {bottom:48px!important;}
+}
