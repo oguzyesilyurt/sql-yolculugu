@@ -1,1 +1,1 @@
-Hediye test: Denel ile gonder, cikis yap, Aycelen ile gir. Acik sayfada sekmeye geri donunce de kontrol edilir. Popup gorunmezse F12 Console > Hediye senkronizasyon hatasi. Supabase gifts SELECT/UPDATE RLS politikalari aliciya izin vermeli. Bu paket veritabani politikalarini degistirmez.
+V18: gifts tablosundaki gerçek sütun is_read kullanıldı (eski kod yanlışlıkla read_at sorguluyordu). Okunmamış hediyeler profil girişinde, sayfaya dönüşte ve 20 saniyede bir kontrol edilir. Hediye popup kapatıldığında is_read=true olur. Mevcut kayıtlar silinmez.
